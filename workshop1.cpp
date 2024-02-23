@@ -4,72 +4,39 @@
 #include <cmath>
 #include <fstream>
 
-using namespace std;
+int N = 10;
 
-int N = 1000000;
+float suma(int N);
+float amus(int N);
 
-std::list<double> s1, s2, dlt, i, iter; 
+int main(void) {
+    std::ofstream datafile("datos.txt");
 
-std::list<double> suma() {
-    double sum=0.0, frac;
-        for (int n = 1; n <= N; ++n) {
-            frac = 1.0 / n;
-            sum += frac;
-       s1.push_back(sum);
-    }
-    return s1;
-}
+    for (int i = 1; i < N; ++i) {
+        float it2=suma(i);
+        float it3=amus(i); 
+        float it4=fabs(1.0-(it2 / it3));
 
-std::list<double> amus() {
-    double sum=0.0, frac;
-        for (int n = N; n > 0; --n) {
-            frac = 1.0 / n;
-            sum += frac;
-            s2.push_back(sum);    
-    }
-    return s2;
-}
-
-std::list<double> itera() {
-        double sum=0.0;
-        for (int n = 1; n <= N; ++n) {
-            iter.push_back(n);    
-    }
-    return iter;
-}
-
-std::list<double> delta() {
-    s1=suma();   
-    s2=amus();
-    auto it1 = s1.begin();
-    auto it2 = s2.begin();
-    for (; it1 != s1.end() && it2 != s2.end(); ++it1, ++it2) {
-            dlt.push_back(fabs(1-(*it1 / *it2)));
-    }
-    return dlt;
-}
-
-
-int main() {
-    s1=suma();
-    s2=amus();
-    i= itera();
-    dlt= delta();
-    auto it1 = s1.begin();
-    auto it2 = s2.begin();
-    auto it3 = i.begin();
-    auto it4 = dlt.begin();
-
-    ofstream datafile("datos.txt");
-    for (int i = 0; i < N; ++i) {
-        datafile << *it3 << "\t\t"  << *it1 << "\t\t" << *it2 <<"\t\t"<< *it4 << endl;
-        ++it3;
-        ++it1;
-        ++it2;
-        ++it4;
+        datafile<< i << "\t\t"  << it2 << "\t\t" << it3  <<"\t\t"<< it4<<"\n";
     }
     datafile.close();
-
-
     return 0;
 }
+
+
+float suma(int N) {
+    double sum=0.0;
+        for (int n = 1; n <= N; ++n) {
+            sum += 1.0/n;
+    } 
+    return sum;
+}
+
+float amus(int N) {
+    double sum=0.0;
+        for (int n = N; n >=1 ; --n) {
+            sum += 1.0 / n;   
+    }
+    return sum;
+}
+
